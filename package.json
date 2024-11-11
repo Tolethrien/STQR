@@ -1,6 +1,7 @@
 {
-  "name": "testturbonew",
+  "name": "scanner-ticket",
   "private": true,
+  "version": "0.0.0",
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",

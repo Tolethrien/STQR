@@ -22,17 +22,21 @@ coverage
 .vercel
 
 # Build Outputs
-.next/
 out/
 build
 dist
+.nuxt
+.output
 
 
 # Debug
 npm-debug.log*
+pnpm-debug.log*
+pnpm-error.log*
 yarn-debug.log*
 yarn-error.log*
 
 # Misc
 .DS_Store
 *.pem
+
