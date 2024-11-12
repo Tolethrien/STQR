@@ -5,5 +5,5 @@ onMounted(() => {
 });
 </script>
 <template>
-  <div>Lets start a</div>
+  <div class="bg-red-500 text-red-700">Lets start a</div>
 </template>
