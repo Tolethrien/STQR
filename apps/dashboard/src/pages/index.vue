@@ -5,5 +5,5 @@ onMounted(() => {
 });
 </script>
 <template>
-  <div>Lets start</div>
+  <div>Lets start a</div>
 </template>
