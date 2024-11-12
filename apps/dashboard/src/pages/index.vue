@@ -1,9 +1,6 @@
 <script setup lang="ts">
-import { helloFromRepo } from "@repo/mypack";
-onMounted(() => {
-  helloFromRepo();
+definePageMeta({
+  middleware: "redirect",
 });
 </script>
-<template>
-  <div class="bg-red-500 text-red-700">Lets start a</div>
-</template>
+<template></template>

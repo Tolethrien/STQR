@@ -9,10 +9,10 @@
       LOGO
     </p>
     <nav class="flex h-full flex-col gap-4">
-      <sideBarButton link="Events" icon="events" />
-      <sideBarButton link="Users" icon="users" />
-      <sideBarButton link="Analytics" icon="alaytics" />
-      <sideBarButton link="Settings" icon="settings" />
+      <SideBarButton link="Events" icon="events" />
+      <SideBarButton link="Users" icon="users" />
+      <SideBarButton link="Analytics" icon="alaytics" />
+      <SideBarButton link="Settings" icon="settings" />
     </nav>
   </aside>
 </template>
