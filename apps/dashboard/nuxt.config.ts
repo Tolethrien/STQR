@@ -16,4 +16,7 @@ export default defineNuxtConfig({
   },
   ssr: false,
   modules: ["@pinia/nuxt"],
+  runtimeConfig: {
+    MONGO_PASS: process.env.MONGO_PASS,
+  },
 });

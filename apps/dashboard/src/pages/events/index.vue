@@ -3,6 +3,8 @@ import getIcons from "@/icons";
 const { listIcon, gridIcon, plusIcon } = getIcons();
 const getDisplayType: string = "list";
 const store = useEventStore();
+const { data, error } = await useFetch("/api/testCall");
+console.log(toRaw(data.value), error);
 </script>
 
 <template>
