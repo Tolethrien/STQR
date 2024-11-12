@@ -4,7 +4,7 @@ import "../index.css";
 
 <template>
   <div>
-    this is default layout
+    <sideBar />
     <slot></slot>
   </div>
 </template>

@@ -8,18 +8,16 @@
     "dev": "nuxt dev --port 4000",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare",
-    "lint": "eslint ./src"
+    "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "@repo/mypack": "workspace:*",
-    "@repo/tailwind-config": "workspace:*"
+    "@repo/mypack": "workspace:*"
   },
   "devDependencies": {
     "nuxt": "^3.14.159",
     "vue": "latest",
     "vue-router": "latest",
-    "@repo/eslint-config": "workspace:*",
+    "@repo/tailwind-config": "workspace:*",
     "@repo/typescript-config": "workspace:*"
   }
 }
