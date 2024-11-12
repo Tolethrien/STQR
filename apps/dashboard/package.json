@@ -14,10 +14,11 @@
     "@repo/mypack": "workspace:*"
   },
   "devDependencies": {
+    "@pinia/nuxt": "^0.7.0",
+    "@repo/tailwind-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
     "nuxt": "^3.14.159",
     "vue": "latest",
-    "vue-router": "latest",
-    "@repo/tailwind-config": "workspace:*",
-    "@repo/typescript-config": "workspace:*"
+    "vue-router": "latest"
   }
 }

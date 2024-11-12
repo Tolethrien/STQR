@@ -15,4 +15,5 @@ export default defineNuxtConfig({
     "@": path.resolve(__dirname, "src"),
   },
   ssr: false,
+  modules: ["@pinia/nuxt"],
 });
