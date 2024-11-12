@@ -2,7 +2,7 @@
 interface Props {
   odd: boolean;
   name: string;
-  date: number;
+  date: string;
   location: string;
   sold: number;
   cap: number;

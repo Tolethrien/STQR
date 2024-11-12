@@ -2,6 +2,7 @@
 import getIcons from "@/icons";
 const { listIcon, gridIcon, plusIcon } = getIcons();
 const getDisplayType: string = "list";
+const store = useEventStore();
 </script>
 
 <template>
@@ -16,14 +17,24 @@ const getDisplayType: string = "list";
         :icon="listIcon"
         :size="{ x: 6, y: 6 }"
         :active="getDisplayType === 'list'"
-        :click="() => console.log('s')"
+        :click="
+          () =>
+            store.addEvent({
+              capacity: 100,
+              date: '02.12.12',
+              eventname: 'snobile',
+              location: 'Sosnowiec,chmielowa 15',
+              sold: 12,
+              id: '129024102741274',
+            })
+        "
         :scale="true"
       />
       <InputsIconButton
         :icon="gridIcon"
         :size="{ x: 6, y: 6 }"
         :active="getDisplayType === 'grid'"
-        :click="() => console.log('s')"
+        :click="() => store.removeLastEvent()"
         :scale="true"
       />
     </div>

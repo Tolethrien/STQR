@@ -3,7 +3,7 @@ import getIcons from "@/icons";
 
 const tempList = Array(100).fill({ name: "list" });
 const { editIcon, calendarIcon, locationIcon, ticketIcon } = getIcons();
-
+const store = useEventStore();
 // const filteredList = computed(() => {
 //   return tempList.filter((val) => val.name.includes(getSearchParam.value));
 // });
@@ -29,14 +29,14 @@ const { editIcon, calendarIcon, locationIcon, ticketIcon } = getIcons();
       </thead>
       <tbody>
         <ContentWindowTableItem
-          v-for="(_, index) in tempList"
+          v-for="(event, index) in store.events"
           :odd="index % 2 === 0"
-          :cap="10"
-          :sold="5"
-          :date="12323123123"
-          location="41-200 Sosnowiec, ul Chemiczna 15"
-          :key="Math.random()"
-          name="Time2Work"
+          :cap="event.capacity"
+          :sold="event.sold"
+          :date="event.date"
+          :location="event.location"
+          :key="index"
+          :name="event.eventname"
         />
       </tbody>
     </table>

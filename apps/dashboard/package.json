@@ -11,7 +11,8 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "@repo/mypack": "workspace:*"
+    "@repo/mypack": "workspace:*",
+    "mongodb": "^6.10.0"
   },
   "devDependencies": {
     "@pinia/nuxt": "^0.7.0",
