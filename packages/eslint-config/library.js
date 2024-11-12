@@ -5,11 +5,6 @@ const project = resolve(process.cwd(), "tsconfig.json");
 /** @type {import("eslint").Linter.Config} */
 module.exports = {
   extends: ["eslint:recommended", "prettier", "turbo"],
-  plugins: ["only-warn"],
-  globals: {
-    React: true,
-    JSX: true,
-  },
   env: {
     node: true,
   },
@@ -28,7 +23,7 @@ module.exports = {
   ],
   overrides: [
     {
-      files: ["*.js?(x)", "*.ts?(x)"],
+      files: ["*.js?(x)", "*.ts?(x)", "vue"],
     },
   ],
 };

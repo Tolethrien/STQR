@@ -8,8 +8,8 @@
     "lint": "eslint . --max-warnings 0"
   },
   "devDependencies": {
-    "eslint-config-custom": "*",
-    "tsconfig": "*",
+    "@repo/eslint-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
     "vue": "^3.4.21"
   }
 }

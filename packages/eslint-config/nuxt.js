@@ -11,12 +11,7 @@ const project = resolve(process.cwd(), "tsconfig.json");
  *
  */
 module.exports = {
-  extends: [
-    "@nuxtjs/eslint-config-typescript",
-    "@vercel/style-guide/eslint/node",
-    "@vercel/style-guide/eslint/browser",
-    "turbo",
-  ].map(require.resolve),
+  extends: ["@nuxtjs/eslint-config-typescript"].map(require.resolve),
   parserOptions: {
     sourceType: "module",
   },
@@ -27,11 +22,18 @@ module.exports = {
       },
     },
   },
-  ignorePatterns: ["node_modules/", "dist/", ".eslintrc.cjs", "nuxt.config.ts"],
+  ignorePatterns: [
+    "node_modules/",
+    "dist/",
+    ".eslintrc.cjs",
+    "nuxt.config.ts",
+    ".nuxt",
+  ],
   rules: {
     "comma-dangle": "off",
     semi: "off",
     "no-undef": "off",
+    quotes: ["off"],
     // add specific rules configurations here
   },
 };
