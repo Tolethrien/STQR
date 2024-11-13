@@ -35,8 +35,8 @@ const store = useEventStore();
           :sold="event.sold"
           :date="event.date"
           :location="event.location"
-          :key="index"
-          :name="event.eventname"
+          :key="event._id"
+          :name="event.eventName"
         />
       </tbody>
     </table>

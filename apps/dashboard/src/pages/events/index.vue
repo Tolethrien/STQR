@@ -3,8 +3,9 @@ import getIcons from "@/icons";
 const { listIcon, gridIcon, plusIcon } = getIcons();
 const getDisplayType: string = "list";
 const store = useEventStore();
-const { data, error } = await useFetch("/api/testCall");
-console.log(toRaw(data.value), error);
+onMounted(() => {
+  store.fetchEvents();
+});
 </script>
 
 <template>
@@ -20,15 +21,10 @@ console.log(toRaw(data.value), error);
         :size="{ x: 6, y: 6 }"
         :active="getDisplayType === 'list'"
         :click="
-          () =>
-            store.addEvent({
-              capacity: 100,
-              date: '02.12.12',
-              eventname: 'snobile',
-              location: 'Sosnowiec,chmielowa 15',
-              sold: 12,
-              id: '129024102741274',
-            })
+          () => {
+            store.addEvent();
+            store.fetchEvents();
+          }
         "
         :scale="true"
       />
@@ -36,7 +32,7 @@ console.log(toRaw(data.value), error);
         :icon="gridIcon"
         :size="{ x: 6, y: 6 }"
         :active="getDisplayType === 'grid'"
-        :click="() => store.removeLastEvent()"
+        :click="() => {}"
         :scale="true"
       />
     </div>
