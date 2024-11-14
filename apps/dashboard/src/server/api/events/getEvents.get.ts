@@ -1,8 +1,9 @@
+import { EventItem } from "~/types/eventSchema";
 import client from "../createClient";
 
 export default defineEventHandler(async () => {
   const db = client.db("STQR");
-  const collecion = db.collection("events");
-  const data = collecion.find().toArray();
+  const collecion = db.collection<EventItem>("events");
+  const data = await collecion.find().toArray();
   return data;
 });

@@ -1,8 +1,9 @@
 <script setup lang="ts">
+import { getDate } from "@/utils/utils";
 interface Props {
   odd: boolean;
   name: string;
-  date: string;
+  date: Date;
   location: string;
   sold: number;
   cap: number;
@@ -19,7 +20,7 @@ const { getFilters } = useEventStore();
       {{ name }}
     </td>
     <td d v-show="getFilters().has('Date')" :class="`${dataStyle}`">
-      {{ date }}
+      {{ getDate(date) }}
     </td>
     <td v-show="getFilters().has('Location')" :class="`${dataStyle}`">
       {{ location }}

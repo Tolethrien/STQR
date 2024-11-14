@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import getIcons from "@/icons";
+import getIcons from "@/utils/icons";
 const { listIcon, gridIcon, gridPlusIcon, plusIcon } = getIcons();
 const getDisplayType: string = "list";
 const store = useEventStore();
@@ -28,7 +28,7 @@ const store = useEventStore();
           () => {
             store.addEvent({
               capacity: 10,
-              date: '12.14.12',
+              date: new Date(),
               eventName: 'Apart',
               location: Math.random().toFixed(3),
               sold: 1,

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import getIcons from "@/icons";
+import getIcons from "@/utils/icons";
 
 const { editIcon, calendarIcon, locationIcon, ticketIcon } = getIcons();
 const { getEventsBySortedSearch, getFilters } = useEventStore();
@@ -32,7 +32,7 @@ const sortedFilteredEvents = computed(() => getEventsBySortedSearch());
           :sold="event.sold"
           :date="event.date"
           :location="event.location"
-          :key="event._id"
+          :key="event.id"
           :name="event.eventName"
         />
       </tbody>

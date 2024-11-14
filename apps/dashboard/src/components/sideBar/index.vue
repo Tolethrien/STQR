@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import getIcons from "@/icons";
+import getIcons from "@/utils/icons";
 const { arrowMore } = getIcons();
 const textVisible = ref<boolean>(false);
 </script>

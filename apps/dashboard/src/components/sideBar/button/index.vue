@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, watchEffect } from "vue";
 import { useRouter } from "vue-router";
-import getIcons from "@/icons";
+import getIcons from "@/utils/icons";
 const { usersIcon, analyticsIcon, eventsIcon, settingsIcon } = getIcons();
 const ICONS = {
   users: usersIcon,

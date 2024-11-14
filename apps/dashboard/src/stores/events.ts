@@ -1,10 +1,10 @@
-import type { EventItem } from "@/types/eventSchema";
+import type { EventItem, StringifyEventItem } from "@/types/eventSchema";
 
-type DBEventItem = EventItem & { _id: string };
 export type EventFilterType = "Location" | "Date" | "Sold/Cap";
 export type EventSortType = "A-Z" | "Z-A" | "Date" | "Sold" | "Cap";
+
 interface EventStore {
-  events: DBEventItem[];
+  events: EventItem[];
   search: string;
   filters: Set<EventFilterType>;
   sorted: EventSortType;
@@ -21,7 +21,7 @@ export const useEventStore = defineStore("eventStore", {
     getFilters: (state) => () => state.filters,
     getSorted: (state) => () => state.sorted,
     getEventByID: (state) => (id: string) =>
-      state.events.find((event) => event._id === id),
+      state.events.find((event) => event.id === id),
     getEventsBySortedSearch: (state) => () => {
       const filteredBySearch = state.events.filter((event) =>
         event.eventName.toLowerCase().includes(state.search.toLowerCase())
@@ -52,15 +52,19 @@ export const useEventStore = defineStore("eventStore", {
   actions: {
     async fetchEvents() {
       try {
-        const response = await $fetch<DBEventItem[]>("/api/events/getEvents", {
-          method: "GET",
-        });
-        this.events = response;
+        const response = await $fetch<StringifyEventItem[]>(
+          "/api/events/getEvents",
+          {
+            method: "GET",
+          }
+        );
+        console.log(response);
+        this.events = convertEventApiToTyped(response);
       } catch (error) {
         console.error("Error fetching events:", error);
       }
     },
-    async addEvent(eventItem: EventItem) {
+    async addEvent(eventItem: Omit<EventItem, "id">) {
       try {
         await $fetch(`/api/events/addEvent`, {
           method: "POST",

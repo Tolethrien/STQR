@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import getIcons from "@/icons";
+import getIcons from "@/utils/icons";
 
 const isDropdownOpen = ref(false);
 const dropDownElement = ref<HTMLElement>();
