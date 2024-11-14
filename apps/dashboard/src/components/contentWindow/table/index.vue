@@ -1,12 +1,9 @@
 <script setup lang="ts">
 import getIcons from "@/icons";
 
-const tempList = Array(100).fill({ name: "list" });
 const { editIcon, calendarIcon, locationIcon, ticketIcon } = getIcons();
-const store = useEventStore();
-// const filteredList = computed(() => {
-//   return tempList.filter((val) => val.name.includes(getSearchParam.value));
-// });
+const { getEventsBySortedSearch, getFilters } = useEventStore();
+const sortedFilteredEvents = computed(() => getEventsBySortedSearch());
 </script>
 <template>
   <div class="overflow-y-auto">
@@ -16,20 +13,20 @@ const store = useEventStore();
           <th>
             <CommonTextWithIcon :icon="editIcon" text="Name" />
           </th>
-          <th>
+          <th v-show="getFilters().has('Date')">
             <CommonTextWithIcon :icon="calendarIcon" text="Date" />
           </th>
-          <th>
+          <th v-show="getFilters().has('Location')">
             <CommonTextWithIcon :icon="locationIcon" text="Location" />
           </th>
-          <th>
+          <th v-show="getFilters().has('Sold/Cap')">
             <CommonTextWithIcon :icon="ticketIcon" text="Sold/Cap" />
           </th>
         </tr>
       </thead>
       <tbody>
         <ContentWindowTableItem
-          v-for="(event, index) in store.events"
+          v-for="(event, index) in sortedFilteredEvents"
           :odd="index % 2 === 0"
           :cap="event.capacity"
           :sold="event.sold"

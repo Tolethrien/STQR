@@ -1,5 +1,4 @@
 <script setup lang="ts">
-// import { getFromEventStore } from "@/stores/eventsStore";
 import { ref } from "vue";
 import getIcons from "@/icons";
 
@@ -7,8 +6,7 @@ const isDropdownOpen = ref(false);
 const dropDownElement = ref<HTMLElement>();
 const buttonElement = ref<HTMLElement>();
 const { dropDownIcon } = getIcons();
-const temp: unknown = [];
-// const { addFilter, getFilterList, removeFilter } = getFromEventStore("filters");
+const { toggleFilter, getFilters } = useEventStore();
 const toggleDropdown = () => {
   if (!isDropdownOpen.value) {
     window.addEventListener("mousedown", handleClickOutSide);
@@ -56,7 +54,8 @@ const handleClickOutSide = (event: MouseEvent) => {
           <input
             type="checkbox"
             value="Date"
-            v-model="temp"
+            :checked="getFilters().has('Date')"
+            @change="() => toggleFilter('Date')"
             class="mr-2 checked:bg-black checked:text-black"
           />
           Date
@@ -65,14 +64,20 @@ const handleClickOutSide = (event: MouseEvent) => {
           <input
             type="checkbox"
             value="Location"
-            v-model="temp"
+            :checked="getFilters().has('Location')"
+            @change="() => toggleFilter('Location')"
             class="mr-2"
-            @change="() => console.log('ss')"
           />
           location
         </label>
         <label class="flex items-center">
-          <input type="checkbox" value="Cap" v-model="temp" class="mr-2" />
+          <input
+            type="checkbox"
+            value="Sold/Cap"
+            :checked="getFilters().has('Sold/Cap')"
+            @change="() => toggleFilter('Sold/Cap')"
+            class="mr-2"
+          />
           Sold/Cap
         </label>
       </form>

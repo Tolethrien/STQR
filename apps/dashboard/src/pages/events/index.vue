@@ -1,11 +1,8 @@
 <script setup lang="ts">
 import getIcons from "@/icons";
-const { listIcon, gridIcon, plusIcon } = getIcons();
+const { listIcon, gridIcon, gridPlusIcon, plusIcon } = getIcons();
 const getDisplayType: string = "list";
 const store = useEventStore();
-onMounted(() => {
-  store.fetchEvents();
-});
 </script>
 
 <template>
@@ -17,19 +14,32 @@ onMounted(() => {
     </div>
     <div class="flex gap-2">
       <InputsIconButton
+        :icon="gridIcon"
+        :size="{ x: 6, y: 6 }"
+        :active="getDisplayType === 'grid'"
+        :click="() => {}"
+        :scale="true"
+      />
+      <InputsIconButton
         :icon="listIcon"
         :size="{ x: 6, y: 6 }"
         :active="getDisplayType === 'list'"
         :click="
           () => {
-            store.addEvent();
+            store.addEvent({
+              capacity: 10,
+              date: '12.14.12',
+              eventName: 'Apart',
+              location: Math.random().toFixed(3),
+              sold: 1,
+            });
             store.fetchEvents();
           }
         "
         :scale="true"
       />
       <InputsIconButton
-        :icon="gridIcon"
+        :icon="gridPlusIcon"
         :size="{ x: 6, y: 6 }"
         :active="getDisplayType === 'grid'"
         :click="() => {}"

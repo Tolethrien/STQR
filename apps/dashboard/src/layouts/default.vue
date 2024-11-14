@@ -1,5 +1,10 @@
 <script setup lang="ts">
 import "../index.css";
+const store = useEventStore();
+
+onMounted(() => {
+  store.fetchEvents();
+});
 </script>
 
 <template>

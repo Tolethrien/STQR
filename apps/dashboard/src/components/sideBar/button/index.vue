@@ -12,8 +12,9 @@ const ICONS = {
 interface Props {
   link: string;
   icon: keyof typeof ICONS;
+  showText?: boolean;
 }
-const { link, icon } = defineProps<Props>();
+const { link, icon, showText = true } = defineProps<Props>();
 const router = useRouter();
 const isActive = ref(true);
 
@@ -26,9 +27,13 @@ watchEffect(() => {
 <template>
   <RouterLink
     :to="link"
-    :class="`${isActive ? 'bg-dash-accent' : 'brightness-75'} flex flex-col items-center justify-center rounded-r-md px-10 py-5`"
+    :class="`${isActive ? 'bg-dash-accent' : 'brightness-75'} flex flex-col items-center justify-center rounded-r-md ${showText ? 'px-1' : 'px-10'} py-3 transition-all`"
   >
     <img :src="ICONS[icon]" alt="buttonIcon" class="h-8 w-8" />
-    <p class="text-dash-TextActive">{{ link }}</p>
+    <p
+      :class="`text-dash-TextActive ${showText && 'opacity-0'} transition-all`"
+    >
+      {{ link }}
+    </p>
   </RouterLink>
 </template>

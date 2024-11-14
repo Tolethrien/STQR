@@ -1,4 +1,4 @@
-import client from "./createClient";
+import client from "../createClient";
 
 export default defineEventHandler(async () => {
   const db = client.db("STQR");

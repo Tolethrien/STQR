@@ -9,7 +9,7 @@ interface Props {
 }
 const dataStyle = "border-r-1 border-dash-stroke pl-4 py-4 text-center h-full";
 const { cap, date, location, name, odd, sold } = defineProps<Props>();
-// const { getFilterList } = getFromEventStore("filters");
+const { getFilters } = useEventStore();
 </script>
 <template>
   <tr
@@ -18,15 +18,14 @@ const { cap, date, location, name, odd, sold } = defineProps<Props>();
     <td :class="`${dataStyle}`">
       {{ name }}
     </td>
-    <td :class="`${dataStyle}`">
+    <td d v-show="getFilters().has('Date')" :class="`${dataStyle}`">
       {{ date }}
     </td>
-    <td :class="`${dataStyle}`">
+    <td v-show="getFilters().has('Location')" :class="`${dataStyle}`">
       {{ location }}
     </td>
-    <td :class="`${dataStyle}`">{{ sold }}/{{ cap }}</td>
-    <td class="w-16 px-4">
-      <button class="h-full w-full">...</button>
+    <td v-show="getFilters().has('Sold/Cap')" :class="`${dataStyle}`">
+      {{ sold }}/{{ cap }}
     </td>
   </tr>
 </template>
