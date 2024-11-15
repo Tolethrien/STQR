@@ -1,4 +1,4 @@
-import type { EventItem, StringifyEventItem } from "@/types/eventSchema";
+import type { EventItem, DBResponce } from "@/types/mongoSchema";
 
 export const getDate = (date: Date) => {
   const onCalendar = date.toLocaleDateString("pl-PL").replace(/\//g, ".");
@@ -8,7 +8,7 @@ export const getDate = (date: Date) => {
   });
   return `${onCalendar} - ${onTime}`;
 };
-export const convertEventApiToTyped = (data: StringifyEventItem[]) => {
+export const responseToTyped = (data: DBResponce<EventItem>[]) => {
   const convertedData: EventItem[] = data.map((item) => {
     const date = item.date.slice(1, item.date.length - 1);
     return {
@@ -16,6 +16,8 @@ export const convertEventApiToTyped = (data: StringifyEventItem[]) => {
       capacity: Number(item.capacity),
       date: new Date(date),
       eventName: item.eventName,
+      city: item.city,
+      street: item.street,
       location: item.location,
       sold: Number(item.sold),
     };

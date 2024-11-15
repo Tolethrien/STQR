@@ -1,8 +1,22 @@
-import type { EventItem, StringifyEventItem } from "@/types/eventSchema";
+import type { EventItem, DBResponce } from "@/types/mongoSchema";
 
-export type EventFilterType = "Location" | "Date" | "Sold/Cap";
-export type EventSortType = "A-Z" | "Z-A" | "Date" | "Sold" | "Cap";
-
+export type EventFilterType = (typeof FILTERS)[number];
+export type EventSortType = (typeof SORT_OPTIONS)[number];
+const SORT_OPTIONS = [
+  "A-Z",
+  "Z-A",
+  "Newest",
+  "Oldest",
+  "City",
+  "Street",
+  "Location",
+  "Most Sold",
+  "Least Sold",
+  "Biggest",
+  "Smallest",
+  "SoldRatio",
+] as const;
+const FILTERS = ["Date", "Adress", "Sold/Cap"] as const;
 interface EventStore {
   events: EventItem[];
   search: string;
@@ -14,7 +28,7 @@ export const useEventStore = defineStore("eventStore", {
     ({
       events: [],
       search: "",
-      filters: new Set(["Date", "Location", "Sold/Cap"]),
+      filters: new Set(FILTERS),
       sorted: "A-Z",
     }) as EventStore,
   getters: {
@@ -26,40 +40,20 @@ export const useEventStore = defineStore("eventStore", {
       const filteredBySearch = state.events.filter((event) =>
         event.eventName.toLowerCase().includes(state.search.toLowerCase())
       );
-      switch (state.sorted) {
-        case "A-Z":
-          return filteredBySearch.sort((a, b) =>
-            a.eventName.localeCompare(b.eventName)
-          );
-        case "Z-A":
-          return filteredBySearch.sort((a, b) =>
-            b.eventName.localeCompare(a.eventName)
-          );
-        case "Date":
-          //TODO
-          return filteredBySearch;
-        case "Sold":
-          return filteredBySearch.sort((a, b) => a.sold - b.sold);
-        case "Cap":
-          return filteredBySearch.sort((a, b) => a.capacity - b.capacity);
-        default:
-          return filteredBySearch;
-      }
+      return sortEventsBy(state.sorted, filteredBySearch);
     },
-    getAllSortedOptions: (state) => () =>
-      ["A-Z", "Z-A", "Date", "Sold", "Cap"] as EventStore["sorted"][],
+    getAllSortedOptions: () => () => SORT_OPTIONS,
   },
   actions: {
     async fetchEvents() {
       try {
-        const response = await $fetch<StringifyEventItem[]>(
+        const response = await $fetch<DBResponce<EventItem>[]>(
           "/api/events/getEvents",
           {
             method: "GET",
           }
         );
-        console.log(response);
-        this.events = convertEventApiToTyped(response);
+        this.events = responseToTyped(response);
       } catch (error) {
         console.error("Error fetching events:", error);
       }
@@ -88,3 +82,34 @@ export const useEventStore = defineStore("eventStore", {
     },
   },
 });
+
+function sortEventsBy(currentSort: EventSortType, list: EventItem[]) {
+  switch (currentSort) {
+    case "A-Z":
+      return list.sort((a, b) => a.eventName.localeCompare(b.eventName));
+    case "Z-A":
+      return list.sort((a, b) => b.eventName.localeCompare(a.eventName));
+    case "Newest":
+      return list.sort((a, b) => b.date.getTime() - a.date.getTime());
+    case "Oldest":
+      return list.sort((a, b) => a.date.getTime() - b.date.getTime());
+    case "City":
+      return list.sort((a, b) => a.city.localeCompare(b.city));
+    case "Street":
+      return list.sort((a, b) => a.street.localeCompare(b.street));
+    case "Location":
+      return list.sort((a, b) => a.location.localeCompare(b.location));
+    case "Most Sold":
+      return list.sort((a, b) => b.sold - a.sold);
+    case "Least Sold":
+      return list.sort((a, b) => a.sold - b.sold);
+    case "Biggest":
+      return list.sort((a, b) => b.capacity - a.capacity);
+    case "Smallest":
+      return list.sort((a, b) => a.capacity - b.capacity);
+    case "SoldRatio":
+      return list.sort((a, b) => b.sold / b.capacity - a.sold / a.capacity);
+    default:
+      return list;
+  }
+}

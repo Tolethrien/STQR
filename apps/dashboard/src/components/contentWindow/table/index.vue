@@ -33,7 +33,10 @@ const sortedFilteredEvents = computed(() => getEventsBySortedSearch());
           :date="event.date"
           :location="event.location"
           :key="event.id"
-          :name="event.eventName"
+          :event-name="event.eventName"
+          :capacity="event.capacity"
+          :city="event.city"
+          :street="event.street"
         />
       </tbody>
     </table>

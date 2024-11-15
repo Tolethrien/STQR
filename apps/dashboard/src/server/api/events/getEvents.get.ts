@@ -1,4 +1,4 @@
-import { EventItem } from "~/types/eventSchema";
+import { EventItem } from "~/types/mongoSchema";
 import client from "../createClient";
 
 export default defineEventHandler(async () => {
