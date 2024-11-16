@@ -1,18 +1,23 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import getIcons from "@/utils/icons";
-
+interface Props {
+  disable?: boolean;
+}
+const { disable = false } = defineProps<Props>();
 const isDropdownOpen = ref(false);
 const dropDownElement = ref<HTMLElement>();
 const buttonElement = ref<HTMLElement>();
 const { dropDownIcon } = getIcons();
-const { toggleFilter, getFilters } = useEventStore();
+const { toggleFilter, getFilters, getAllFilterOptions } = useEventStore();
+
 const toggleDropdown = () => {
   if (!isDropdownOpen.value) {
     window.addEventListener("mousedown", handleClickOutSide);
   }
   isDropdownOpen.value = !isDropdownOpen.value;
 };
+
 const handleClickOutSide = (event: MouseEvent) => {
   const node = event.target as Node;
   if (
@@ -26,7 +31,7 @@ const handleClickOutSide = (event: MouseEvent) => {
 </script>
 <template>
   <div
-    class="bg-dash-sec shadow-button-inner relative flex h-2/4 w-28 items-center rounded-md"
+    :class="`bg-dash-sec shadow-button-inner relative flex h-2/4 w-28 items-center rounded-md ${disable && 'brightness-75 pointer-events-none'}`"
   >
     <button
       @click.prevent="toggleDropdown"
@@ -50,35 +55,19 @@ const handleClickOutSide = (event: MouseEvent) => {
       ref="dropDownElement"
     >
       <form class="flex flex-col gap-2">
-        <label class="flex items-center">
+        <label
+          class="flex items-center"
+          v-for="(filterName, index) in getAllFilterOptions()"
+          :key="index"
+        >
           <input
             type="checkbox"
-            value="Date"
-            :checked="getFilters().has('Date')"
-            @change="() => toggleFilter('Date')"
+            :value="filterName"
+            :checked="getFilters().has(filterName)"
+            @change="() => toggleFilter(filterName)"
             class="mr-2 checked:bg-black checked:text-black"
           />
-          Date
-        </label>
-        <label class="flex items-center">
-          <input
-            type="checkbox"
-            value="Location"
-            :checked="getFilters().has('Location')"
-            @change="() => toggleFilter('Location')"
-            class="mr-2"
-          />
-          location
-        </label>
-        <label class="flex items-center">
-          <input
-            type="checkbox"
-            value="Sold/Cap"
-            :checked="getFilters().has('Sold/Cap')"
-            @change="() => toggleFilter('Sold/Cap')"
-            class="mr-2"
-          />
-          Sold/Cap
+          {{ filterName }}
         </label>
       </form>
     </div>

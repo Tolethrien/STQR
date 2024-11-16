@@ -1,13 +1,15 @@
 <script setup lang="ts">
 import getIcons from "@/utils/icons";
-
+interface Props {
+  disable?: boolean;
+}
+const { disable = false } = defineProps<Props>();
 const { dropDownIcon } = getIcons();
-const { getAllSortedOptions, getSorted, setSorted } = useEventStore();
+const { getAllSortedOptions, setSorted } = useEventStore();
 </script>
 <template>
-  <p>{{ getSorted() }}</p>
   <div
-    class="bg-dash-sec shadow-button-inner relative flex h-2/4 max-w-52 items-center rounded-md"
+    :class="`bg-dash-sec shadow-button-inner relative flex h-2/4 max-w-52 items-center rounded-md ${disable && 'brightness-75 pointer-events-none'}`"
   >
     <select
       id="select-input"

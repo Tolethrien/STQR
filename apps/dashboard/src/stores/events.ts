@@ -12,11 +12,11 @@ const SORT_OPTIONS = [
   "Location",
   "Most Sold",
   "Least Sold",
-  "Biggest",
-  "Smallest",
-  "SoldRatio",
+  "Largest Pool",
+  "Smallest Pool",
+  "Success Rate",
 ] as const;
-const FILTERS = ["Date", "Adress", "Sold/Cap"] as const;
+const FILTERS = ["Date", "Adress", "Sold/Cap", "S/C Ratio"] as const;
 interface EventStore {
   events: EventItem[];
   search: string;
@@ -28,7 +28,7 @@ export const useEventStore = defineStore("eventStore", {
     ({
       events: [],
       search: "",
-      filters: new Set(FILTERS),
+      filters: new Set(["Date", "Adress", "Sold/Cap"]),
       sorted: "A-Z",
     }) as EventStore,
   getters: {
@@ -43,6 +43,7 @@ export const useEventStore = defineStore("eventStore", {
       return sortEventsBy(state.sorted, filteredBySearch);
     },
     getAllSortedOptions: () => () => SORT_OPTIONS,
+    getAllFilterOptions: () => () => FILTERS,
   },
   actions: {
     async fetchEvents() {
@@ -103,11 +104,11 @@ function sortEventsBy(currentSort: EventSortType, list: EventItem[]) {
       return list.sort((a, b) => b.sold - a.sold);
     case "Least Sold":
       return list.sort((a, b) => a.sold - b.sold);
-    case "Biggest":
+    case "Largest Pool":
       return list.sort((a, b) => b.capacity - a.capacity);
-    case "Smallest":
+    case "Smallest Pool":
       return list.sort((a, b) => a.capacity - b.capacity);
-    case "SoldRatio":
+    case "Success Rate":
       return list.sort((a, b) => b.sold / b.capacity - a.sold / a.capacity);
     default:
       return list;

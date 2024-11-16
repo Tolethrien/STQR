@@ -2,7 +2,8 @@
 import getIcons from "@/utils/icons";
 
 const { editIcon, calendarIcon, locationIcon, ticketIcon } = getIcons();
-const { getEventsBySortedSearch, getFilters } = useEventStore();
+const { getEventsBySortedSearch, getFilters, getAllFilterOptions } =
+  useEventStore();
 const sortedFilteredEvents = computed(() => getEventsBySortedSearch());
 </script>
 <template>
@@ -13,14 +14,12 @@ const sortedFilteredEvents = computed(() => getEventsBySortedSearch());
           <th>
             <CommonTextWithIcon :icon="editIcon" text="Name" />
           </th>
-          <th v-show="getFilters().has('Date')">
-            <CommonTextWithIcon :icon="calendarIcon" text="Date" />
-          </th>
-          <th v-show="getFilters().has('Location')">
-            <CommonTextWithIcon :icon="locationIcon" text="Location" />
-          </th>
-          <th v-show="getFilters().has('Sold/Cap')">
-            <CommonTextWithIcon :icon="ticketIcon" text="Sold/Cap" />
+          <th
+            v-for="(filter, index) of getAllFilterOptions()"
+            :key="index"
+            v-show="getFilters().has(filter)"
+          >
+            <CommonTextWithIcon :icon="editIcon" :text="filter" />
           </th>
         </tr>
       </thead>
@@ -28,15 +27,7 @@ const sortedFilteredEvents = computed(() => getEventsBySortedSearch());
         <ContentWindowTableItem
           v-for="(event, index) in sortedFilteredEvents"
           :odd="index % 2 === 0"
-          :cap="event.capacity"
-          :sold="event.sold"
-          :date="event.date"
-          :location="event.location"
-          :key="event.id"
-          :event-name="event.eventName"
-          :capacity="event.capacity"
-          :city="event.city"
-          :street="event.street"
+          :event="event"
         />
       </tbody>
     </table>
