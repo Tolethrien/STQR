@@ -3,6 +3,20 @@ import type { Config } from "tailwindcss";
 const config: Config = {
   ...baseConfig,
   content: ["./src/**/*.{ts,tsx,vue}"],
+  plugins: [
+    function ({ addUtilities }: { addUtilities: Function }) {
+      addUtilities({
+        ".text-input-third": {
+          "@apply  bg-dash-third shadow-button-inner placeholder:text-dash-TextInactive rounded-md px-4 py-2 outline-none":
+            {},
+        },
+        ".text-input-sec": {
+          "@apply  bg-dash-sec shadow-button-inner placeholder:text-dash-TextInactive rounded-md px-4 py-2 outline-none":
+            {},
+        },
+      });
+    },
+  ],
   theme: {
     extend: {
       colors: {

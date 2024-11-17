@@ -13,6 +13,7 @@ import settingsIcon from "@/assets/icons/settings.svg";
 import ticketIcon from "@/assets/icons/ticket.svg";
 import usersIcon from "@/assets/icons/users.svg";
 import arrowMore from "@/assets/icons/arrowMore.svg";
+import pictureFrame from "@/assets/icons/pictureFrame.svg";
 
 export default () => {
   return {
@@ -31,5 +32,6 @@ export default () => {
     usersIcon,
     arrowMore,
     gridPlusIcon,
+    pictureFrame,
   };
 };

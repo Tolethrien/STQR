@@ -12,7 +12,7 @@ export const responseToTyped = (data: DBResponce<EventItem>[]) => {
   const convertedData: EventItem[] = data.map((item) => {
     const date = item.date.slice(1, item.date.length - 1);
     return {
-      id: item.id,
+      id: item._id,
       capacity: Number(item.capacity),
       date: new Date(date),
       eventName: item.eventName,

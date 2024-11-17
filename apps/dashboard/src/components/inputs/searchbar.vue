@@ -6,6 +6,7 @@ interface Props {
 const { disable = false } = defineProps<Props>();
 const { loopIcon } = getIcons();
 const { setSearch } = useEventStore();
+const store = useEventStore();
 </script>
 <template>
   <div
