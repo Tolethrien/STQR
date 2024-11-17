@@ -9,11 +9,12 @@ interface Props {
 const dataStyle = "border-r-1 border-dash-stroke pl-4 py-4 text-center h-full";
 const { odd, event } = defineProps<Props>();
 const { getFilters } = useEventStore();
-console.log(event);
+const router = useRouter();
 </script>
 <template>
   <tr
-    :class="`text-dash-TextActive ${odd ? 'bg-dash-listOdd' : 'bg-dash-listEven'} border-1 border-dash-stroke w-full text-lg shadow-lg`"
+    @click="() => router.push(`/events/${event.id}`)"
+    :class="`text-dash-TextActive ${odd ? 'bg-dash-listOdd' : 'bg-dash-listEven'} hover:brightness-125 cursor-pointer border-1 border-dash-stroke w-full text-lg shadow-lg`"
   >
     <td :class="`${dataStyle}`">
       {{ event.eventName }}

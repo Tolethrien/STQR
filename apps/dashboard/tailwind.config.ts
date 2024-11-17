@@ -19,6 +19,25 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      animation: {
+        shakeAndFlash: "shakeAndFlash 1s ease-in-out",
+      },
+      keyframes: {
+        shakeAndFlash: {
+          "0%, 100%": {
+            transform: "translateX(0)",
+          },
+          "10%, 30%, 50%, 70%, 90%": {
+            transform: "translateX(-5px)",
+          },
+          "20%, 40%, 60%, 80%": {
+            transform: "translateX(5px)",
+          },
+          "50%": {
+            backgroundColor: "#7f1d1d",
+          },
+        },
+      },
       colors: {
         "dash-main": "#202036",
         "dash-sec": "#323253",

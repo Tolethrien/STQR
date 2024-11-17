@@ -1,23 +1,10 @@
 <script setup lang="ts">
 import getIcons from "@/utils/icons";
-
 const { plusIcon, pictureFrame } = getIcons();
 const { addEvent } = useEventStore();
 const router = useRouter();
-//TODO: POOGARNIAC LEJBLE
-const createNewEvent = async () => {
-  const eventDate = new Date(`${formData.date}T${formData.time}`);
-  await addEvent({
-    capacity: 0,
-    sold: 0,
-    city: formData.city,
-    date: eventDate,
-    eventName: formData.event,
-    location: formData.location,
-    street: formData.street,
-  });
-  await router.replace("/events");
-};
+
+const isValidating = ref(false);
 const formData = reactive({
   event: "",
   city: "",
@@ -26,6 +13,29 @@ const formData = reactive({
   date: "",
   time: "",
 });
+const createNewEvent = async () => {
+  const someEmpty = Object.values(formData).some((value) => value.length === 0);
+  if (someEmpty) {
+    isValidating.value = true;
+    setTimeout(() => (isValidating.value = false), 2000);
+    return;
+  }
+  try {
+    await addEvent({
+      capacity: 0,
+      sold: 0,
+      city: formData.city,
+      date: new Date(`${formData.date}T${formData.time}`),
+      eventName: formData.event,
+      location: formData.location,
+      street: formData.street,
+    });
+    await router.replace("/events");
+  } catch (e) {
+    console.error("problem while adding event", e);
+    //TODO: add some error for user, popover or something
+  }
+};
 </script>
 <template>
   <CommonVerticalBar>
@@ -62,7 +72,8 @@ const formData = reactive({
         <p class="text-xl py-4">How it should be named?</p>
         <label aria-label="event name">
           <input
-            class="text-input-third"
+            required
+            :class="`text-input-third ${formData.event.length === 0 && isValidating && 'animate-shakeAndFlash'}`"
             v-model="formData.event"
             placeholder="event name..."
           />
@@ -71,14 +82,16 @@ const formData = reactive({
         <div class="flex gap-4">
           <label aria-label="city">
             <input
-              class="text-input-third"
+              required
+              :class="`text-input-third ${formData.city.length === 0 && isValidating && 'animate-shakeAndFlash'}`"
               v-model="formData.city"
               placeholder="city..."
             />
           </label>
           <label aria-label="street">
             <input
-              class="text-input-third"
+              required
+              :class="`text-input-third ${formData.street.length === 0 && isValidating && 'animate-shakeAndFlash'}`"
               v-model="formData.street"
               placeholder="street..."
             />
@@ -87,7 +100,8 @@ const formData = reactive({
         <div class="py-4">
           <label aria-label="location/place">
             <input
-              class="text-input-third"
+              required
+              :class="`text-input-third ${formData.location.length === 0 && isValidating && 'animate-shakeAndFlash'}`"
               v-model="formData.location"
               placeholder="location/place..."
             />
@@ -103,7 +117,8 @@ const formData = reactive({
         <div class="flex gap-4 items-center">
           <label aria-label="date">
             <input
-              class="text-input-third"
+              required
+              :class="`text-input-third ${formData.date.length === 0 && isValidating && 'animate-shakeAndFlash'}`"
               v-model="formData.date"
               type="date"
             />
@@ -112,7 +127,8 @@ const formData = reactive({
           <span>on</span>
           <label aria-label="time">
             <input
-              class="text-input-third"
+              required
+              :class="`text-input-third ${formData.time.length === 0 && isValidating && 'animate-shakeAndFlash'}`"
               v-model="formData.time"
               type="time"
             />

@@ -14,7 +14,7 @@ const { getAllSortedOptions, setSorted } = useEventStore();
     <select
       id="select-input"
       name="select-input"
-      class="text-dash-TextActive placeholder:text-dash-TextInactive *:bg-dash-sec h-full w-full appearance-none text-ellipsis bg-transparent pl-2 pr-10 outline-none"
+      class="text-dash-TextActive placeholder:text-dash-TextInactive cursor-pointer *:bg-dash-sec h-full w-full appearance-none text-ellipsis bg-transparent pl-2 pr-10 outline-none"
       @change="
         (event) =>
           setSorted((event.target as HTMLSelectElement).value as EventSortType)
